@@ -52,6 +52,9 @@ The script looks like this:
 ---
 
 First we set 3 variables.
+strVMName contains the name of the VM. We keep name of the VM in sync with the vmx name (details below)
+strLUN is the LUN where the VM runs (eg. our example VM lives at "/vmfs/volumes/storage1/Alexida"
+strIMPORT is the location where we make the copy of the VM for backup purposes.
 
 The rm -rf line will delete the previous backup completely if it is still there! (We have another script running that already has made a zip archive of the VM so in our scenario that is fine)
 
@@ -74,12 +77,13 @@ The last step copies the logs.
 
 
 Another example creates completely consistent backups, but in order to do so it shuts down the VM.
-This is a very short interruption as it will quickly make a snapshot and then restart the VM after which the lengthy part of the process starts.
+This is a very short interruption as it will quickly make a snapshot and then restart the VM after which the lengthy part of the process starts. 
 
 You can see this in the demo file : store-dotis.sh
 
-It has one extra step at the end where it zips the VM too. The resulting vm is uniquely named with the datetime suffixed to the vm name.
+It has one extra step at the end where it zips the VM too. Another new thing is that it uses a temporary location for storing the VM before it makes the archive.
+The resulting archive is uniquely named with the datetime suffixed to the vm name. 
 
 eg. dotis-20180923.tar.gz
 
-Please note that you only should do this for smaller VMs as you are running this on your vSphere console and that is not the best place for a lot of heavy CPU processing tasks.
+Please note that you only run the archive process for smaller VMs as you are running this on your vSphere console and that is not the best place for a lot of heavy CPU processing tasks.
