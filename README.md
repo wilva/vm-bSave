@@ -1,5 +1,5 @@
 # vm-bSave
-vSphere Esxi backup scripts
+## vSphere Esxi backup scripts
 
 VM Be safe: Bash scripts to backup your VMs. 
 
@@ -28,32 +28,28 @@ It is running from local storage at /vmfs/volumes/storage1 and we want to make a
 interrupting the VM. The VM keeps on running during the backup and the backup made is a so called crash-consistent backup.
 
 The script looks like this:
-=====
-#!/bin/sh
-#
-# Imports the entire alexida machine as a ready to run VM from our local storage.
-# The import is from a LIVE VM, folder name = vmx name = first disk name
-# Old imports WILL be removed and overwritten! 
-
-strVMname="Alexida"
-strLUN="/vmfs/volumes/storage1"
-strIMPORT="/vmfs/volumes/backups"
-
-rm -rf ${strIMPORT}/${strVMname}
-
-# load vmfunctions
-. /vmfs/volumes/backups/vmfunctions.sh
-
-setupBackupLocation "${strVMname}" "${strLUN}" "${strIMPORT}"
-
-createSnapshot "${strVMX}" ${VMID}
-
-cloneVMDK "${strLUN}/${strVMname}/${strVMname}.vmdk" "${strIMPORT}/${strVMname}/${strVMname}.vmdk" "2gbsparse"
-
-commitSnapshot "${strVMX}" ${VMID}
-
-finishBackup "${strVMname}" "${strLUN}"
-=====
+---
+    #!/bin/sh
+    #
+    # Imports the entire alexida machine as a ready to run VM from our local storage.
+    # The import is from a LIVE VM, folder name = vmx name = first disk name
+    # Old imports WILL be removed and overwritten! 
+    
+    strVMname="Alexida"
+    strLUN="/vmfs/volumes/storage1"
+    strIMPORT="/vmfs/volumes/backups"
+    
+    rm -rf ${strIMPORT}/${strVMname}
+    
+    # load vmfunctions
+    . /vmfs/volumes/backups/vmfunctions.sh
+    
+    setupBackupLocation "${strVMname}" "${strLUN}" "${strIMPORT}"
+    createSnapshot "${strVMX}" ${VMID}
+    cloneVMDK "${strLUN}/${strVMname}/${strVMname}.vmdk" "${strIMPORT}/${strVMname}/${strVMname}.vmdk" "2gbsparse"
+    commitSnapshot "${strVMX}" ${VMID}
+    finishBackup "${strVMname}" "${strLUN}"
+---
 
 First we set 3 variables.
 
@@ -70,7 +66,7 @@ If you have a VM with more than 1 vmdk file then add more lines.
 Example: 
 This would copy /vmfs/volumes/storage1/Alexida/Alexida_1.vmdk to /vmfs/volumes/backups/Alexida/Alexida_1.vmdk
 
-cloneVMDK "${strLUN}/${strVMname}/${strVMname}_1.vmdk" "${strIMPORT}/${strVMname}/${strVMname}_1.vmdk" "2gbsparse"
+    cloneVMDK "${strLUN}/${strVMname}/${strVMname}_1.vmdk" "${strIMPORT}/${strVMname}/${strVMname}_1.vmdk" "2gbsparse"
 So one line for each vmdk you want to backup.
 
 After the copying of the data has completed, we can commit the snapshot and finish up the backup.
