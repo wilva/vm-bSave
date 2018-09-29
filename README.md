@@ -15,3 +15,10 @@ The logic for the scripts on how-to backup a running VM is based on what I learn
 For whatever reason I had to roll my own.
 
 The only thing new at the time of publishing is the name. :) and the license.
+
+The main logic for making the backups is in the file vmfunctions.sh
+
+The way it works is by writing a short script per VM, a few examples have been included.
+
+The backup script isn't trying to be smart you have to tell it in a few lines on what it has to do.
+
