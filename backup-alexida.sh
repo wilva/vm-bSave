@@ -8,8 +8,6 @@ strVMname="Alexida"
 strLUN="/vmfs/volumes/storage1"
 strIMPORT="/vmfs/volumes/backups"
 
-rm -rf ${strIMPORT}/${strVMname}
-
 # load vmfunctions
 . /vmfs/volumes/backups/vmfunctions.sh
 
